@@ -15,7 +15,6 @@ class MonopolyGateway:
             nursery.start_soon(trio.serve_tcp, self.handler, port)
 
 
-
     def run(self):
         ''' Run connaction handle '''
         try:

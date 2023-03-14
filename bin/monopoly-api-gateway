@@ -9,7 +9,7 @@ import sys
 
 sys.path.append('../lib/python3')
 
-import trio_monopoly_api as mpAPI
+from mnp_api_gw import MonopolyGateway
 
 version = 'v0.0.0'
 logger = None
@@ -33,8 +33,8 @@ def main():
         logging.error("Read config error: " + str(e))
 
     # Run
-    mpGataway = mpAPI.MonopolyGateway(confParser)
-    mpGataway.run()
+    monopolyGateway = MonopolyGateway.MonopolyGateway(confParser)
+    monopolyGateway.run()
 
 if __name__ == "__main__":
     main()

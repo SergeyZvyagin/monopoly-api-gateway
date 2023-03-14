@@ -1,0 +1,40 @@
+#!/usr/bin/python3
+
+import configparser
+import importlib
+import argparse
+import datetime
+import logging
+import sys
+
+sys.path.append('../lib/python3')
+
+import trio_monopoly_api as mpAPI
+
+version = 'v0.0.0'
+logger = None
+
+def main():
+    # Arguments Parse
+    argParser = argparse.ArgumentParser(prog='monopoly-api-gateway', description="The Monopoly Game's API gateway microservice - writen by Sergey Zvyagin <sergey.zvyagin@yahoo.ru>")
+    argParser.add_argument('-v', '--version', help='Show version and exit', action='version', version=version)
+    argParser.add_argument('-c', '--config', help='Path to config file')
+    args = argParser.parse_args()
+
+    # Logging configurate
+    logging.basicConfig(level='DEBUG', format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+
+    # Configuration Parse
+    confParser = configparser.ConfigParser()
+    try:
+        with open(args.config) as f:
+            confParser.read_file(f)
+    except Exception as e:
+        logging.error("Read config error: " + str(e))
+
+    # Run
+    mpGataway = mpAPI.MonopolyGateway(confParser)
+    mpGataway.run()
+
+if __name__ == "__main__":
+    main()

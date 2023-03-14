@@ -1,0 +1,38 @@
+syntax = "proto3";
+
+package UsersService
+
+service UsersService {
+	rpc AuthUser(AuthRequest) returns (AuthResponse);
+	rpc RenameUser(RenameRequest) returns (RenameResponse);
+	rpc VerificationUser(VerificationRequest) returns (VerificationResponse);
+}
+
+message AuthRequest {
+	string authInfo = 1;
+	string userName = 2;
+	string hashMethod = 3;
+}
+
+message AuthResponse {
+	int32 code = 1;
+	optional string JWT = 2;
+}
+
+message RenameRequest {
+	string JWT = 1;
+	string newUserName = 2;
+}
+
+message RenameResponse {
+	int32 code = 1;
+}
+
+message VerificationRequest {
+	string JWT = 1;
+}
+
+message VerificationResponse {
+	int32 code = 1;
+	optional int64 userID = 2;
+}
